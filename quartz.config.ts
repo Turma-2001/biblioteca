@@ -3,46 +3,12 @@ import * as Plugin from "./quartz/plugins"
 
 const config: QuartzConfig = {
   configuration: {
-    pageTitle: "Turma 2001",
-    enableSPA: true,
-    enablePopovers: true,
     locale: "pt-BR",
-    analytics: {
-      provider: "plausible",
-    },
     baseUrl: "turma-2001.github.io",
     ignorePatterns: ["private", "templates", ".obsidian"],
     defaultDateType: "created",
-    theme: {
-      typography: {
-        header: "PT Sans",
-        body: "PT Serif",
-        code: "PT Mono",
-      },
-      colors: {
-        lightMode: {
-          light: "#fbf9f9",
-          lightgray: "#e7e7e7",
-          gray: "#878585",
-          darkgray: "#575454",
-          dark: "#272323",
-          secondary: "#7278c0",
-          tertiary: "#1f2ed1",
-          highlight: "rgba(143, 159, 169, 0.15)",
-        },
-        darkMode: {
-          light: "#060404",
-          lightgray: "#0a0a0a",
-          gray: "#5e5e5e",
-          darkgray: "#acacac",
-          dark: "#d2d2d2",
-          secondary: "#8e96f0",
-          tertiary: "#1f2ed1",
-          highlight: "rgba(143, 159, 169, 0.15)",
-        },
-      },
-    },
   },
+
   plugins: {
     transformers: [
       Plugin.FrontMatter(),
@@ -58,26 +24,17 @@ const config: QuartzConfig = {
       Plugin.GitHubFlavoredMarkdown(),
       Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
       Plugin.Description(),
-      Plugin.Homeworks(),
       Plugin.LatestContents(),
       Plugin.SVGScaler(),
     ],
     filters: [Plugin.RemoveDrafts()],
     emitters: [
-      Plugin.AliasRedirects(),
-      Plugin.ComponentResources({
-        fontOrigin: "googleFonts",
-      }),
-      Plugin.ContentPage(),
-      Plugin.FolderPage(),
-      Plugin.TagPage(),
       Plugin.ContentIndex({
         enableSiteMap: false,
         enableRSS: false,
       }),
       Plugin.Assets(),
       Plugin.Static(),
-      Plugin.NotFoundPage(),
     ],
   },
 }

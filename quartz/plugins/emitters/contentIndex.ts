@@ -10,11 +10,8 @@ import { write } from "./helpers"
 
 export type ContentIndex = Map<FullSlug, ContentDetails>
 export type ContentDetails = {
-  title: string
   links: SimpleSlug[]
-  tags: string[]
   content: string
-  richContent?: string
   date?: number
   banner?: string
   description?: string
@@ -22,6 +19,8 @@ export type ContentDetails = {
   assessement?: number
   type?: string
   deadline?: number
+  tableOfContents: any[]
+  frontmatter: any
 }
 
 interface Options {
@@ -62,20 +61,13 @@ export const ContentIndex: QuartzEmitterPlugin<Partial<Options>> = (opts) => {
 
         if (opts?.includeEmptyFiles || (file.data.text && file.data.text !== "")) {
           linkIndex.set(slug, {
-            title: file.data.frontmatter?.title!,
-            links: file.data.links ?? [],
-            tags: file.data.frontmatter?.tags ?? [],
-            content: file.data.text ?? "",
-            richContent: opts?.rssFullHtml
-              ? escapeHTML(toHtml(tree as Root, { allowDangerousHtml: true }))
-              : undefined,
-
+            frontmatter: data.frontmatter,
             date: date,
-            description: data.frontmatter?.description ?? "",
-            subject: data.frontmatter?.subject,
-            assessement: data.frontmatter?.assessement,
-            type: data.frontmatter?.type,
-            deadline: data.frontmatter?.deadline
+
+            content: escapeHTML(toHtml(tree as Root, { allowDangerousHtml: true, allowDangerousCharacters: true })) ?? "",
+
+            links: file.data.links ?? [],
+            tableOfContents: file.data.toc ?? []
           })
         }
       }

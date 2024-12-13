@@ -1,11 +1,6 @@
 import { GlobalConfiguration } from "../cfg"
 import { QuartzPluginData } from "../plugins/vfile"
 
-interface Props {
-  date: Date
-  locale?: string
-}
-
 export type ValidDateType = keyof Required<QuartzPluginData>["dates"]
 
 export function getDate(cfg: GlobalConfiguration, data: QuartzPluginData): Date | undefined {
@@ -25,8 +20,4 @@ export function formatDate(d: Date, locale = "en-US"): string {
     month: "short",
     day: "2-digit",
   })
-}
-
-export const Date = ({ date, locale }: Props) => {
-  return <>{formatDate(date, locale)}</>
 }
